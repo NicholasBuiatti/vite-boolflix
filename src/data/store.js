@@ -2,6 +2,7 @@ import { reactive } from 'vue';
 
 const myData = reactive({
     moviesList: [],
+    seriesList: [],
 });
 
 export default myData;

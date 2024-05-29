@@ -25,13 +25,16 @@ export default {
 </script>
 
 <template>
-    <h4 class="text-white">Questi sono i risultati ottenuti</h4>
-    <div v-for="movie in this.store.moviesList" class="col-3 bg-warning">
-        <h5>Titolo: {{ movie.title }}</h5>
-        <h5>Titolo Originale: {{ movie.original_title }}</h5>
-        <h5>Lingua: {{ movie.original_language }}</h5>
-        <h5>Voto: {{ movie.vote_average }}</h5>
+    <h4 class="text-white">Sono stati trovati {{ this.store.moviesList.length }} film</h4>
+    <div class="row">
+        <div v-for="movie in this.store.moviesList" class="col-3 bg-warning m-2">
+            <h5>Titolo: {{ movie.title }}</h5>
+            <h5>Titolo Originale: {{ movie.original_title }}</h5>
+            <h5>Lingua: {{ movie.original_language }}</h5>
+            <h5>Voto: {{ movie.vote_average }}</h5>
+        </div>
     </div>
+
     <pre class="bg-primary">{{ this.store.moviesList }}</pre>
 </template>
 
