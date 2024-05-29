@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 
 const myData = reactive({
-
+    moviesList: [],
 });
 
 export default myData;
@@ -14,3 +14,4 @@ const iMieiDati = reactive(ilMioOggettone);
 
 export default ilMioOggettone;
 */
+
