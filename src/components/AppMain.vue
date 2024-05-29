@@ -32,9 +32,9 @@ export default {
 
 <template>
     <section class="container-fluid">
-        <div class="row">
-            <AppMainNavBar class="col-1" />
-            <div class="col-11">
+        <div class="row overflow-auto">
+            <!-- <AppMainNavBar class="col-1" /> -->
+            <div class="col-12 overflow-auto" id="containerfilm">
                 <AppMainTop />
                 <AppMainMid />
                 <AppMainBottom />
@@ -45,4 +45,14 @@ export default {
     </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+section {
+    padding-top: 5rem;
+    height: 100vh;
+    background: linear-gradient(to bottom, #a90329 0%, #8f0222 47%, #6d0019 100%);
+}
+
+#containerfilm {
+    height: calc(100vh - 5rem);
+}
+</style>

@@ -75,21 +75,25 @@ export default {
 </script>
 
 <template>
-    <section class="container-fluid">
+    <section class="container-fluid position-fixed bg-dark">
         <div class="row justify-content-between align-items-center">
             <h1 class="col-3 text-danger">BOOLFLIX</h1>
             <div class="col-5">
-                <input v-model="searchInput" class="col-9" type="text">
+                <input @keyup="searchMovies()" v-model="searchInput" class="col-9" type="text">
                 <button @click="searchMovies(), searchSeries()" class="col-2 ms-2">Search</button>
             </div>
-            <div class="col-2 text-end">
+            <!-- <div class="col-2 text-end">
                 <a class="ms-2" href="#">icon</a>
                 <a href="#">icon</a>
                 <a href="#">icon</a>
-            </div>
+            </div> -->
 
         </div>
     </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+section {
+    height: 5rem;
+}
+</style>
