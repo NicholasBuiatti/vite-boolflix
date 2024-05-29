@@ -15,6 +15,7 @@ export default {
         }
     },
     methods: {
+        //RICHIAMO DAL SERVER LA LISTA DEI FILM CON TUTTE LE SPECIFICHE
         getMovies() {
             const options = {
                 method: 'GET',
@@ -35,6 +36,7 @@ export default {
             axios
                 .request(options)
                 .then(function (response) {
+                    //SALVO L'ARRAY DI RISPOSTA NELLA VARIABILE GLOBALE CHE è NELLO STORE.JS
                     store.moviesList = response.data.results;
                     console.log(store.moviesList);
                 })
@@ -44,6 +46,7 @@ export default {
         }
     },
     mounted() {
+        //RICHIAMO LA FUNZIONE PER GENERARE L'ARRAY MOVIESLIST NELLO STORE AL MOUNTED
         this.getMovies();
 
         /* CHIAMATA AXIOS
