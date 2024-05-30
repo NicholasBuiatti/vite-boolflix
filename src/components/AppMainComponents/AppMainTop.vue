@@ -23,18 +23,18 @@ export default {
                 return 'd-none'
             }
         },
-        next() {
+        next(arryaList) {
             this.lastImg++;
             this.firstImg++;
-            if (this.lastImg == this.store.moviesList.length + 1) {
-                this.firstImg = (this.store.moviesList.length - 6)
-                this.lastImg = this.store.moviesList.length
+            if (this.lastImg == arryaList.length + 1) {
+                this.firstImg = (arryaList.length - 6)
+                this.lastImg = arryaList.length
             }
         },
-        back() {
+        back(arryaList) {
             this.lastImg--;
             this.firstImg--;
-            console.log(this.store.moviesList.length);
+            console.log(arryaList.length);
             if (this.firstImg == -1) {
                 this.firstImg = 0
                 this.lastImg = 6
@@ -82,8 +82,8 @@ export default {
         </div>
 
     </div>
-    <button @click="next()">avanti</button>
-    <button @click="back()">indietro</button>
+    <button @click="next(this.store.moviesList)">avanti</button>
+    <button @click="back(this.store.moviesList)">indietro</button>
     <!-- <pre class="bg-primary">{{ this.store.moviesList }}</pre> -->
 </template>
 
