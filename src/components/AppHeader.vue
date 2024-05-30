@@ -16,15 +16,23 @@ export default {
         }
     },
     methods: {
-        // changeLngInFlag() {
+        // pushFlag() {
         //     for (let i = 0; i < store.moviesList.length; i++) {
         //         const element = store.moviesList[i];
-        //         console.log(element);
-        //         // if (element.original_language == 'en') {
-        //         //     element.original_language = './flagIcon/en.svg'
-        //         // }
+        //         if (element.original_language == 'en') {
+        //             element.flag = 'en.svg';
+        //         } else if (element.original_language == 'it') {
+        //             element.flag = 'it.svg';
+        //         } else if (element.original_language == 'es') {
+        //             element.flag = 'es.svg';
+        //         } else if (element.original_language == 'gr') {
+        //             element.flag = 'gr.svg';
+        //         } else {
+        //             element.flag = 'No flag'
+        //         }
 
         //     }
+
         // },
         searchMovies() {
             //RICHIAMO DAL SERVER LA LISTA DEI FILM CON TUTTE LE SPECIFICHE AL CLICK SUL BUTTON
@@ -45,9 +53,9 @@ export default {
                 .then(function (response) {
                     //SALVO L'ARRAY DI RISPOSTA NELLA VARIABILE GLOBALE CHE è NELLO STORE.JS
                     store.moviesList = response.data.results;
+                    //CON UN CICLO PUSHO UNA KEY CHE IMPOSTA COME VALUE IL NOME DEL FILE DELLA BANDIERA
                     for (let i = 0; i < store.moviesList.length; i++) {
                         const element = store.moviesList[i];
-                        console.log(element);
                         if (element.original_language == 'en') {
                             element.flag = 'en.svg';
                         } else if (element.original_language == 'it') {
@@ -61,7 +69,7 @@ export default {
                         }
 
                     }
-                    console.log(store.moviesList);
+                    // console.log(store.moviesList);
                 })
                 .catch(function (error) {
                     console.error(error);
@@ -84,7 +92,22 @@ export default {
                 .then(function (response) {
                     //SALVO L'ARRAY DI RISPOSTA NELLA VARIABILE GLOBALE CHE è NELLO STORE.JS
                     store.seriesList = response.data.results;
-                    console.log(store.seriesList);
+                    for (let i = 0; i < store.seriesList.length; i++) {
+                        const element = store.seriesList[i];
+                        if (element.original_language == 'en') {
+                            element.flag = 'en.svg';
+                        } else if (element.original_language == 'it') {
+                            element.flag = 'it.svg';
+                        } else if (element.original_language == 'es') {
+                            element.flag = 'es.svg';
+                        } else if (element.original_language == 'gr') {
+                            element.flag = 'gr.svg';
+                        } else {
+                            element.flag = 'No flag'
+                        }
+
+                    }
+                    // console.log(store.seriesList);
                 })
                 .catch(function (error) {
                     console.error(error);

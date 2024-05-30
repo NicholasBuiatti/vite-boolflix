@@ -14,6 +14,11 @@ export default {
         }
     },
     methods: {
+        //FUNZIONE PER ESTRAPOLARE IL PERCORSO IMMAGINE
+        getImg(flagIcon) {
+            let risultato = new URL(`../flagIcon/${flagIcon}`, import.meta.url);
+            return risultato.href;
+        },
     },
     created() {
 
@@ -32,6 +37,8 @@ export default {
             <h5>Titolo: {{ serie.name }}</h5>
             <h5>Titolo Originale: {{ serie.original_name }}</h5>
             <h5>Lingua: {{ serie.original_language }}</h5>
+            <img :src="getImg(serie.flag)" :class="serie.flag == 'No flag' ? 'd-none' : ''" alt="" id="flag">
+
             <h5>Voto: {{ serie.vote_average }}</h5>
         </div>
     </div>
@@ -40,7 +47,8 @@ export default {
 </template>
 
 <style scoped>
-img {
-    height: 10rem;
+#flag {
+    width: 5rem;
+    height: 3rem;
 }
 </style>
