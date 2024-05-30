@@ -11,9 +11,36 @@ export default {
     data() {
         return {
             store,
+            lastImg: 6,
+            firstImg: 0,
         }
     },
     methods: {
+        classDNone(index) {
+            if (index >= this.firstImg && index < this.lastImg) {
+                return ''
+            } else {
+                return 'd-none'
+            }
+        },
+        next() {
+            this.lastImg++;
+            this.firstImg++;
+            if (this.lastImg == this.store.moviesList.length + 1) {
+                this.firstImg = (this.store.moviesList.length - 6)
+                this.lastImg = this.store.moviesList.length
+            }
+        },
+        back() {
+            this.lastImg--;
+            this.firstImg--;
+            console.log(this.store.moviesList.length);
+            if (this.firstImg == -1) {
+                this.firstImg = 0
+                this.lastImg = 6
+            }
+
+        },
         //FUNZIONE PER ESTRAPOLARE IL PERCORSO IMMAGINE
         getImg(flagIcon) {
             let risultato = new URL(`../flagIcon/${flagIcon}`, import.meta.url);
@@ -33,9 +60,11 @@ export default {
     <h4 class="text-white">Sono stati trovati {{ this.store.moviesList.length }} film</h4>
 
     <!-- CREO UN CONTAINER BOX CON OVERFLOW PER CONTENERE I MIEI POSTER SU UN UNICA RIGA -->
-    <div class="row flex-nowrap overflow-hidden w-100">
-        <div v-for="movie in this.store.moviesList" class="col-3 position-relative" id="containerPoster">
-            <img :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`" class="w-100" alt="" id="poster">
+    <div class="row flex-nowrap w-100 justify-content-between">
+        <div v-for="movie, i in this.store.moviesList" :class="classDNone(i)" class="col-3 position-relative"
+            id="containerPoster">
+            <!-- <template v-if="i < 5"> -->
+            <img :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`" alt="" id="poster">
 
             <div class="text-white p-2 position-absolute" id="infoMovie">
                 <h6>Titolo originale: {{ movie.original_title }}</h6>
@@ -49,14 +78,13 @@ export default {
                 <span v-for="noStar in (5 - (Math.round(movie.vote_average / 2)))">☆</span>
                 <h6>{{ movie.release_date }}</h6>
             </div>
-
-
+            <!-- </template> -->
         </div>
 
     </div>
-
-
-    <pre class="bg-primary">{{ this.store.moviesList }}</pre>
+    <button @click="next()">avanti</button>
+    <button @click="back()">indietro</button>
+    <!-- <pre class="bg-primary">{{ this.store.moviesList }}</pre> -->
 </template>
 
 <style scoped>
@@ -65,8 +93,13 @@ export default {
     height: 3rem;
 }
 
+#containerPoster {
+    width: 15rem;
+}
+
 #poster {
     height: 20rem;
+    width: 14rem;
 }
 
 #infoMovie {
@@ -74,7 +107,13 @@ export default {
     height: 20rem;
     width: 14rem;
     border: 1px solid white;
+    display: none;
 }
+
+#containerPoster:hover>#infoMovie {
+    display: unset
+}
+
 
 #containerPoster:hover>#poster {
     display: none;
