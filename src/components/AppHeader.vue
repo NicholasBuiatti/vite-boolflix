@@ -12,10 +12,20 @@ export default {
     data() {
         return {
             store,
-            searchInput: '',
+            searchInput: 'Batman',
         }
     },
     methods: {
+        // changeLngInFlag() {
+        //     for (let i = 0; i < store.moviesList.length; i++) {
+        //         const element = store.moviesList[i];
+        //         console.log(element);
+        //         // if (element.original_language == 'en') {
+        //         //     element.original_language = './flagIcon/en.svg'
+        //         // }
+
+        //     }
+        // },
         searchMovies() {
             //RICHIAMO DAL SERVER LA LISTA DEI FILM CON TUTTE LE SPECIFICHE AL CLICK SUL BUTTON
             const options = {
@@ -35,6 +45,22 @@ export default {
                 .then(function (response) {
                     //SALVO L'ARRAY DI RISPOSTA NELLA VARIABILE GLOBALE CHE è NELLO STORE.JS
                     store.moviesList = response.data.results;
+                    for (let i = 0; i < store.moviesList.length; i++) {
+                        const element = store.moviesList[i];
+                        console.log(element);
+                        if (element.original_language == 'en') {
+                            element.flag = 'en.svg';
+                        } else if (element.original_language == 'it') {
+                            element.flag = 'it.svg';
+                        } else if (element.original_language == 'es') {
+                            element.flag = 'es.svg';
+                        } else if (element.original_language == 'gr') {
+                            element.flag = 'gr.svg';
+                        } else {
+                            element.flag = 'No flag'
+                        }
+
+                    }
                     console.log(store.moviesList);
                 })
                 .catch(function (error) {
@@ -79,7 +105,8 @@ export default {
         <div class="row justify-content-between align-items-center">
             <h1 class="col-3 text-danger">BOOLFLIX</h1>
             <div class="col-5">
-                <input @keyup="searchMovies()" v-model="searchInput" class="col-9" type="text">
+                <!-- @keyup="searchMovies()" -->
+                <input v-model="searchInput" class="col-9" type="text">
                 <button @click="searchMovies(), searchSeries()" class="col-2 ms-2">Search</button>
             </div>
             <!-- <div class="col-2 text-end">
