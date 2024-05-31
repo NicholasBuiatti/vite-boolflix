@@ -12,32 +12,17 @@ export default {
     data() {
         return {
             store,
-            searchInput: 'Batman',
+            searchInput: '',
+            URLMovies: 'https://api.themoviedb.org/3/search/movie',
+            URLSeries: 'https://api.themoviedb.org/3/search/tv',
+
         }
     },
     methods: {
-        // pushFlag() {
-        //     for (let i = 0; i < store.moviesList.length; i++) {
-        //         const element = store.moviesList[i];
-        //         if (element.original_language == 'en') {
-        //             element.flag = 'en.svg';
-        //         } else if (element.original_language == 'it') {
-        //             element.flag = 'it.svg';
-        //         } else if (element.original_language == 'es') {
-        //             element.flag = 'es.svg';
-        //         } else if (element.original_language == 'gr') {
-        //             element.flag = 'gr.svg';
-        //         } else {
-        //             element.flag = 'No flag'
-        //         }
-
-        //     }
-
-        // },
         searchMovies() {
-            //RICHIAMO DAL SERVER LA LISTA DEI FILM CON TUTTE LE SPECIFICHE AL CLICK SUL BUTTON
+            this.visibleMovies = false;
+            this.store.moviesListBase = []
             const options = {
-
                 method: 'GET',
                 url: 'https://api.themoviedb.org/3/search/movie',
                 //L'INPUT UNTENTE PRESO DALLO STORE VIENE INSERITO NEL QUERY
@@ -47,35 +32,15 @@ export default {
                     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzZjNjA5NmNiYTM4ZWE1ZWM3OTA1ZDc0YWU5Y2I0YSIsInN1YiI6IjY2NTcyN2M5MTIzMjQ1ODQwOTU5OTc3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mF9LoLQkeAs3GL34C9GmZhrrCks7Hf_0Ip3qvACB9YY'
                 }
             };
-
             axios
                 .request(options)
                 .then(function (response) {
-                    //SALVO L'ARRAY DI RISPOSTA NELLA VARIABILE GLOBALE CHE è NELLO STORE.JS
                     store.moviesList = response.data.results;
-                    //CON UN CICLO PUSHO UNA KEY CHE IMPOSTA COME VALUE IL NOME DEL FILE DELLA BANDIERA
-                    for (let i = 0; i < store.moviesList.length; i++) {
-                        const element = store.moviesList[i];
-                        if (element.original_language == 'en') {
-                            element.flag = 'en.svg';
-                        } else if (element.original_language == 'it') {
-                            element.flag = 'it.svg';
-                        } else if (element.original_language == 'es') {
-                            element.flag = 'es.svg';
-                        } else if (element.original_language == 'gr') {
-                            element.flag = 'gr.svg';
-                        } else {
-                            element.flag = 'No flag'
-                        }
-
-                    }
-                    // console.log(store.moviesList);
                 })
                 .catch(function (error) {
                     console.error(error);
                 });
         },
-
         searchSeries() {
             const options = {
                 method: 'GET',
@@ -86,33 +51,15 @@ export default {
                     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMzZjNjA5NmNiYTM4ZWE1ZWM3OTA1ZDc0YWU5Y2I0YSIsInN1YiI6IjY2NTcyN2M5MTIzMjQ1ODQwOTU5OTc3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mF9LoLQkeAs3GL34C9GmZhrrCks7Hf_0Ip3qvACB9YY'
                 }
             };
-
             axios
                 .request(options)
                 .then(function (response) {
-                    //SALVO L'ARRAY DI RISPOSTA NELLA VARIABILE GLOBALE CHE è NELLO STORE.JS
                     store.seriesList = response.data.results;
-                    for (let i = 0; i < store.seriesList.length; i++) {
-                        const element = store.seriesList[i];
-                        if (element.original_language == 'en') {
-                            element.flag = 'en.svg';
-                        } else if (element.original_language == 'it') {
-                            element.flag = 'it.svg';
-                        } else if (element.original_language == 'es') {
-                            element.flag = 'es.svg';
-                        } else if (element.original_language == 'gr') {
-                            element.flag = 'gr.svg';
-                        } else {
-                            element.flag = 'No flag'
-                        }
-
-                    }
-                    // console.log(store.seriesList);
                 })
                 .catch(function (error) {
                     console.error(error);
                 });
-        }
+        },
     },
     created() {
 
@@ -124,26 +71,25 @@ export default {
 </script>
 
 <template>
-    <section class="container-fluid position-fixed bg-dark">
+    <section class="container-fluid bg-dark">
         <div class="row justify-content-between align-items-center">
             <h1 class="col-3 text-danger">BOOLFLIX</h1>
-            <div class="col-5">
-                <!-- @keyup="searchMovies()" -->
-                <input v-model="searchInput" class="col-9" type="text">
-                <button @click="searchMovies(), searchSeries()" class="col-2 ms-2">Search</button>
+            <div class="col-5 text-end row m-0">
+                <input v-model="searchInput" class="w-75 form-control me-2 border-danger" type="search"
+                    placeholder="Search" aria-label="Search" id="searchBar">
+                <button @click="searchMovies(), searchSeries()"
+                    class="col-2 btn btn-outline-danger ms-2">Search</button>
             </div>
-            <!-- <div class="col-2 text-end">
-                <a class="ms-2" href="#">icon</a>
-                <a href="#">icon</a>
-                <a href="#">icon</a>
-            </div> -->
-
         </div>
     </section>
 </template>
 
 <style scoped>
-section {
-    height: 5rem;
+section>div {
+    height: 4rem;
+}
+
+#searchBar:focus {
+    box-shadow: 0 0 0 .25rem rgba(252, 0, 0, 0.604)
 }
 </style>

@@ -1,10 +1,12 @@
 <script>
 // import FILE from 'PERCORSO';
 import store from '../../data/store.js';
+import AppMainPosterSerie from './AppMainPosterSerie.vue';
+
 export default {
     name: "",
     components: {
-
+        AppMainPosterSerie
     },
     props: {
     },
@@ -57,12 +59,22 @@ export default {
 </script>
 
 <template>
-    <h4 class="text-white">Queste sono le serie Tv</h4>
+    <h4 class="text-white">Serie TV</h4>
     <!-- CREO UN CONTAINER BOX CON OVERFLOW PER CONTENERE I MIEI POSTER SU UN UNICA RIGA -->
     <div class="row flex-nowrap w-100 justify-content-between">
-        <div v-for="serie, i in this.store.seriesList" :class="classDNone(i)" class="col-3 position-relative"
+        <div class="row flex-nowrap w-100 justify-content-between">
+            <!-- <template v-if="this.store.moviesListBase.length !== 0"> -->
+            <AppMainPosterSerie v-for="serie, i in this.store.seriesListBase" :class="classDNone(i)" :singlePoster=serie
+                class="col-3 position-relative" id="containerPoster" />
+            <!-- </template>
+<template v-else>
+                <AppMainPoster v-for="movie, i in this.store.moviesList" :class="classDNone(i)" :singlePoster=movie
+                    class="col-3 position-relative" id="containerPoster" />
+            </template> -->
+
+        </div>
+        <!-- <div v-for="serie, i in this.store.seriesList" :class="classDNone(i)" class="col-3 position-relative"
             id="containerPoster">
-            <!-- <template v-if="i < 5"> -->
             <img :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`" alt="" id="poster">
 
             <div class="text-white p-2 position-absolute" id="infoMovie">
@@ -70,34 +82,15 @@ export default {
                 <h6>Titolo tradotto: {{ serie.name }}</h6>
                 <h6>Lingua originale: {{ serie.original_language }}</h6>
                 <img :src="getImg(serie.flag)" :class="serie.flag == 'No flag' ? 'd-none' : ''" alt="" id="flag">
-                <!-- APPROSIMAZIONE DEL VOTO AL LIMITE PIù VICINO DIVIDENDOLO PER 2 -->
                 <h6>Voto: {{ Math.round(serie.vote_average / 2) }}</h6>
-                <!-- METTO TANTE STELLE QUANTO è IL VOTO E NON MI PIACE CHE UN 3.4 DIVENTI UN 4 -->
                 <span v-for="star in Math.round(serie.vote_average / 2)">★</span>
                 <span v-for="noStar in (5 - (Math.round(serie.vote_average / 2)))">☆</span>
                 <h6>{{ serie.release_date }}</h6>
             </div>
-            <!-- </template> -->
-        </div>
+        </div> -->
     </div>
     <button @click="next(this.store.seriesList)">avanti</button>
     <button @click="back(this.store.seriesList)">indietro</button>
-    <pre class="bg-primary">{{ this.store.seriesList }}</pre>
-
-
-    <!-- <div class="row ms-2">
-        <div v-for="serie in this.store.seriesList" class="col-3 bg-warning m-2">
-            <img :src="`https://image.tmdb.org/t/p/w342/${serie.backdrop_path}`" alt="">
-            <h5>Titolo: {{ serie.name }}</h5>
-            <h5>Titolo Originale: {{ serie.original_name }}</h5>
-            <h5>Lingua: {{ serie.original_language }}</h5>
-            <img :src="getImg(serie.flag)" :class="serie.flag == 'No flag' ? 'd-none' : ''" alt="" id="flag">
-
-            <h5>Voto: {{ serie.vote_average }}</h5>
-        </div>
-    </div>
-
-    <pre class="bg-primary">{{ this.store.seriesList }}</pre> -->
 </template>
 
 <style scoped>
